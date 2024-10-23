@@ -1,0 +1,134 @@
+config DRM_NX
+	tristate "DRM Support for NEXELL Display Controller"
+	depends on DRM && (ARCH_S5P6818 || ARCH_S5P4418)
+	select DRM_KMS_HELPER
+	select DRM_KMS_FB_HELPER
+	select VIDEOMODE_HELPERS
+	select FB_SYS_FILLRECT
+	select FB_SYS_COPYAREA
+	select FB_SYS_IMAGEBLIT
+	select VT_HW_CONSOLE_BINDING if FRAMEBUFFER_CONSOLE
+	help
+	  Choose this option if you have a Nexell soc chipset.
+	  This driver provides kernel mode setting and buffer
+	  management to userspace. If M is selected the module
+	  will be called nexell drm.
+
+choice
+	prompt "Support DRM"
+
+config DRM_NX_S5PXX18
+	bool "S5PXX18"
+	depends on DRM_NX
+	help
+	 This selects support for S5PXX18 SoC DRM driver.
+	 If you want to enable S5PXX18 SoC DRM display,
+	 you should selet this option.
+
+config DRM_NX_NXP5XXX
+	bool "NXP5XXX"
+	depends on DRM_NX
+	select MFD_SYSCON
+	help
+	 This selects support for NXP5XXX SoC DRM driver.
+	 If you want to enable NXP5XXX SoC DRM display,
+	 you should selet this option.
+
+endchoice
+
+config DRM_CHECK_PRE_INIT
+	bool "Don't reinitialize, use bootloader's Display configuration"
+	depends on DRM_NX
+	select FB_PRE_INIT_FB
+	default n
+	help
+	 Select this option if display contents should be inherited as set by
+	 the bootloader.
+
+	 If in doubt, say "N".
+
+config DRM_NX_RGB
+	bool "RGB LCD support"
+	depends on DRM_NX
+	select DRM_PANEL
+	help
+	 This selects support for RGB LCD display out.
+	 If you want to enable RGB LCD display,
+	 you should selet this option.
+
+config DRM_NX_LVDS
+	bool "LVDS LCD support"
+	depends on DRM_NX
+	select DRM_PANEL
+	help
+	 This selects support for LVDS LCD display out.
+	 If you want to enable LVDS LCD display,
+	 you should selet this option.
+
+config DRM_NX_MIPI_DSI
+	bool "MiPi DSI support"
+	depends on DRM_NX
+	select DRM_PANEL
+	select DRM_MIPI_DSI
+	help
+	 This selects support for MiPi-DSI display device.
+	 If you want to enable MiPi-DSI display device,
+	 you should selet this option.
+
+config DRM_NX_HDMI
+	bool "HDMI support"
+	depends on DRM_NX
+	select SWITCH
+	help
+	 This selects support for HDMI display out.
+	 If you want to enable HDMI display,
+	 you should selet this option.
+
+config DRM_NX_TVOUT_S5P4418
+	bool "Tv out support"
+	depends on DRM_NX && ARCH_S5P4418
+	select DRM_PANEL
+	help
+	 This selects support for tv display out.
+	 If you want to enable tv display,
+	 you should selet this option.
+
+config DRM_NX_TVOUT_S5P6818
+	bool "Tv out support"
+	depends on DRM_NX && ARCH_S5P6818
+	select DRM_PANEL
+	help
+	 This selects support for tv display out.
+	 If you want to enable tv display,
+	 you should selet this option.
+
+config DRM_NX_CLUSTER_LCD
+	bool "Cluster LCD support"
+	depends on DRM_NX
+	select DRM_PANEL
+	default n
+	help
+	 This selects support for cluster lcd out.
+	 If you want to enable cluster lcd display,
+	 you should selet this option with LCDs type (LVDS, RGB).
+
+config DRM_CHECK_IOCTL_AUTH
+	bool "Check ioctl authentication for modesetting driver"
+	depends on DRM
+	default y
+	help
+	 Choose this option if you need check authentication
+	 for modesetting driver
+
+	 If in doubt, say "Y".
+
+config DRM_NX_FB_PAN_DISPLAY
+	bool "Support pan display for DRM frame buffer"
+	depends on DRM_NX
+	default y
+	help
+	 Choose this option if you need support frame buffer pan display
+	 for modesetting driver
+
+	 If in doubt, say "Y".
+

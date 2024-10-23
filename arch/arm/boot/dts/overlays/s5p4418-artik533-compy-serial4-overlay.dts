@@ -1,0 +1,17 @@
+/* Enables serial4 interface,
+ * It creates /dev/ttyAMA4 node for artik compy board.
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "samsung,artik530-compy";
+
+	fragment@0 {
+		target = <&serial4>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+};

@@ -1,0 +1,41 @@
+/*
+ * Copyright (C) 2017 Samsung Electronics.
+ * Author: Chanho Park <chanho61.park@samsung.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "s5p4418-artik530.dtsi"
+
+/ {
+	artik_s3t9mf {
+		pwms = <&pwm 1 500 0>;
+		pwm-names = "pwm_t9mf";
+	};
+};
+
+&pwm {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pwm1_pin>;
+	samsung,pwm-outputs = <1>;
+	status = "okay";
+};
+
+&cpu_alert0 {
+	temperature = <85000>;
+};
+
+&cpu_alert1 {
+	temperature = <95000>;
+};

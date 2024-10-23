@@ -1,0 +1,19 @@
+/* Enables I2C_1 interface,
+ * It creates /dev/i2c-1 node for artik compy board.
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "samsung,artik530-compy";
+
+	fragment@0 {
+		target = <&i2c_1>;
+		__overlay__ {
+			status = "okay";
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+	};
+};

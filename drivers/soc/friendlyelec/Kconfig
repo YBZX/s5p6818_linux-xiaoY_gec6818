@@ -1,0 +1,29 @@
+#
+# Machine drivers
+#
+
+if ARCH_S5P6818
+
+config MACH_NANOPI3
+	bool "FriendlyElec NanoPi 3 Series Machine"
+	default y
+
+config MACH_ANDROID_BUILD
+	bool "Build kernel for Android 7+"
+	depends on MACH_NANOPI3
+	default n
+
+endif
+
+if ARCH_S5P4418
+
+config MACH_NANOPI2
+	bool "FriendlyElec NanoPi 2 Series Machine"
+	default y
+
+config MACH_ANDROID_BUILD
+	bool "Build kernel for Android 7+"
+	depends on MACH_NANOPI2
+	default n
+
+endif
