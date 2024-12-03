@@ -263,7 +263,7 @@
 			#address-cells = <0x1>;
 			#size-cells = <0x0>;
 
-			snps,phy-addr = <7>;
+			snps,phy-addr = <4>;
 			snps,reset-gpio = <&gpio_e 22 0>;
 			snps,reset-active-low;
 			snps,reset-delays-us = <0 10000 30000>;
@@ -272,8 +272,8 @@
 				#address-cells = <1>;
 				#size-cells = <0>;
 
-				ethernet_phy: ethernet-phy@7 {
-					reg = <7>;
+				ethernet_phy: ethernet-phy@4 {
+					reg = <4>;
 					fixed-link {
 						speed = <1000>;
 						full-duplex;
@@ -468,7 +468,18 @@
 		};
 
 		i2c_1: i2c@c00a5000 {
+			samsung,i2c-max-bus-freq = <200000>;
 			status = "okay";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			ft5x06_ts@38 {
+			compatible = "ft5x06_ts", "ft5x06";
+			reg = <0x38>;
+			interrupt-parent = <&gpio_b>;
+			interrupts = <26 IRQ_TYPE_EDGE_FALLING>;
+			};
 		};
 
 		i2c_2: i2c@c00a6000 {
@@ -477,59 +488,6 @@
 
 			#address-cells = <1>;
 			#size-cells = <0>;
-
-			onewire_ts@2f {
-				compatible = "onewire";
-				reg = <0x2f>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-				pinctrl-names = "default";
-				pinctrl-0 = <&touchpanel_irq>;
-			};
-
-			ft5x06_ts@38 {
-				compatible = "edt,edt-ft5x06", "ft5x06";
-				reg = <0x38>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-			};
-
-			goodix_ts@5d {
-				compatible = "goodix,gt9xx";
-				reg = <0x5d>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-				goodix,irq-gpio = <&gpio_c 16 0>;
-			};
-
-			goodix_ts@14 {
-				compatible = "goodix,gt9xx";
-				reg = <0x14>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-				goodix,irq-gpio = <&gpio_c 16 0>;
-			};
-
-			hx8528a_ts@48 {
-				compatible = "himax,hx8528-a";
-				reg = <0x48>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-			};
-
-			it7260_ts@46 {
-				compatible = "ite,it7260";
-				reg = <0x46>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-			};
-
-			st1572_ts@55 {
-				compatible = "sitronix,st1572";
-				reg = <0x55>;
-				interrupt-parent = <&gpio_c>;
-				interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
-			};
 
 		};
 
@@ -791,13 +749,6 @@
 	external_sync = <0>;
 	interlace = <0>;
 	status = "okay";
-
-	sensor {
-		type = <NX_CAPTURE_SENSOR_I2C>;
-		i2c_name = "ov5640";
-		i2c_adapter = <0>;
-		addr = <0x3C>;
-	};
 };
 
 &dp_drm {

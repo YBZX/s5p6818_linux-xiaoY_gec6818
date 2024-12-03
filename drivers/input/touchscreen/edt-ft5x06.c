@@ -244,7 +244,11 @@ static irqreturn_t edt_ft5x06_ts_isr(int irq, void *dev_id)
 			continue;
 
 		x = ((buf[0] << 8) | buf[1]) & 0x0fff;
-		y = ((buf[2] << 8) | buf[3]) & 0x0fff;
+		u32 y_temp = 0;
+		y_temp = ((buf[2] << 8) | buf[3]) & 0x0fff;
+		//Yu GEC6818开发板触摸板Y方向相反了
+		y = 480 - y_temp;
+		dev_err(&tsdata->client->dev, "x:%d y_o:%d y:%d \n",x, y_temp, y);
 		id = (buf[2] >> 4) & 0x0f;
 		down = type != TOUCH_EVENT_UP;
 
